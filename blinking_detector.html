@@ -13,10 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script type="text/javascript">
-        // More API functions here:
-        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
-        // the link to your model provided by Teachable Machine export panel
         const URL = "https://teachablemachine.withgoogle.com/models/qbd76VIza/";
 
         let model, webcam, labelContainer, maxPredictions;
@@ -84,11 +81,7 @@
 
         async function predict() {
             const prediction = await model.predict(webcam.canvas);
-            // for (let i = 0; i < maxPredictions; i++) {
-            //     const classPrediction =
-            //         prediction[i].className.replace("Class 1", "Probability that eyes are open : ").replace("Class 2", "Probability that eyes are closed:") + prediction[i].probability.toFixed(2);
-            //     labelContainer.childNodes[i].innerHTML = classPrediction;
-            // }
+
             labelContainer.childNodes[0].innerHTML = "Probability that eyes are open : " + prediction[0].probability.toFixed(2);
             labelContainer.childNodes[1].innerHTML = "";
 
