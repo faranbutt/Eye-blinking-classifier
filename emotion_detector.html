@@ -78,7 +78,7 @@
             const currentTime = Date.now();
     
             // Check if 15 seconds have passed since the last request
-            if (currentTime - lastSentTime > 15000) {
+            if (currentTime - lastSentTime > 5000) {
                 sendToServer(mostLikelyEmotion);
                 lastSentTime = currentTime;
             }
@@ -88,7 +88,8 @@
             try {
                 const response = await fetch(`http://127.0.0.1:8000/api/${emotion}`);
                 const responseData = await response.text();
-                document.getElementById("server-output").innerHTML = responseData;
+                var text = JSON.parse(responseData)["result"];
+                document.getElementById("server-output").innerHTML = "AI therapist response: Try to" + text;
             } catch (error) {
                 console.error('There was a problem sending the data to the server:', error);
             }
