@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Eye blink detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+
+  <body>
+    <button type="button" onclick="init2()">Start</button>
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/qbd76VIza/";
+
+        let model, webcam, labelContainer, maxPredictions;
+
+        let blinkCounter = 0;
+        let consecutiveBlinkFrames = 0;
+        let startTime;
+
+        // Load the image model and setup the webcam
+        async function init1() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            const flip = true; // whether to flip the webcam
+            webcam = new tmImage.Webcam(500, 500, flip); 
+            await webcam.setup(); 
+        }
+
+        async function init2() {
+
+
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));
+            }
+            
+            // Display the blink counter
+            const blinkDisplay = document.createElement("div");
+            blinkDisplay.id = "blinkCounter";
+            blinkDisplay.innerHTML = "Blinks: 0";
+            document.body.appendChild(blinkDisplay);
+
+            // Add a reset button
+            const resetButton = document.createElement("button");
+            resetButton.innerHTML = "Reset";
+            resetButton.onclick = reset;
+            document.body.appendChild(resetButton);
+
+            // Start the timer
+            startTime = Date.now();
+            setInterval(checkTimer, 1000);
+        }
+
+        function checkTimer() {
+            if (Date.now() - startTime > 60000) {
+                alert("One minute is over! Blinks: " + blinkCounter);
+                reset();
+            }
+        }
+
+        async function loop() {
+          webcam.update();
+          await predict();
+          window.requestAnimationFrame(loop);
+        }
+
+        let blinkInProgress = false;
+
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);
+            // for (let i = 0; i < maxPredictions; i++) {
+            //     const classPrediction =
+            //         prediction[i].className.replace("Class 1", "Probability that eyes are open : ").replace("Class 2", "Probability that eyes are closed:") + prediction[i].probability.toFixed(2);
+            //     labelContainer.childNodes[i].innerHTML = classPrediction;
+            // }
+            labelContainer.childNodes[0].innerHTML = "Probability that eyes are open : " + prediction[0].probability.toFixed(2);
+            labelContainer.childNodes[1].innerHTML = "";
+
+            // If a blink is in progress and class 1 is detected, reset the blinkInProgress flag
+            if (blinkInProgress && prediction[0].probability > 0.5) {
+                blinkInProgress = false;
+            }
+
+            // Check for blinking
+            if (!blinkInProgress && prediction[1].probability > 0.5) {
+                consecutiveBlinkFrames++;
+                if (consecutiveBlinkFrames >= 2) {
+                    blinkCounter++;
+                    document.getElementById("blinkCounter").innerHTML = "Blinks: " + blinkCounter;
+                    consecutiveBlinkFrames = 0;
+                    blinkInProgress = true;  // Set the flag indicating a blink is in progress
+                }
+            } else {
+                consecutiveBlinkFrames = 0;
+            }
+        }
+
+
+        function reset() {
+            blinkCounter = 0;
+            consecutiveBlinkFrames = 0;
+            document.getElementById("blinkCounter").innerHTML = "Blinks: 0";
+            startTime = Date.now();
+        }
+
+        init1();
+
+
+
+    </script>
+
+  </body>
+</html>
