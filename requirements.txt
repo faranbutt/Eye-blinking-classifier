@@ -1,0 +1,5 @@
+flask
+transformers
+flask_restful
+flask_cors
+numpy
