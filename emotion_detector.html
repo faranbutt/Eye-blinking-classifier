@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Eye blink detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+
+  <body>
+    <div>Teachable Machine Image Model</div>
+    <button type="button" onclick="init()">Start</button>
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+        const URL = "https://teachablemachine.withgoogle.com/models/0pMyTmHUr/";
+    
+        let model, webcam, labelContainer, maxPredictions;
+    
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+    
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+    
+            const flip = true;
+            webcam = new tmImage.Webcam(500, 500, flip);
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+    
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        }
+    
+        async function loop() {
+            webcam.update();
+            await predict();
+            window.requestAnimationFrame(loop);
+        }
+    
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);
+            let maxProbability = -1;
+            let mostLikelyEmotion = '';
+    
+            for (let i = 0; i < maxPredictions; i++) {
+                const className = prediction[i].className;
+                const probability = prediction[i].probability;
+                let emotion = "";
+    
+                switch (className) {
+                    case "Class 1": emotion = "Angry"; break;
+                    case "Class 2": emotion = "Disgust"; break;
+                    case "Class 3": emotion = "Fear"; break;
+                    case "Class 4": emotion = "Happy"; break;
+                    case "Class 5": emotion = "Neutral"; break;
+                    case "Class 6": emotion = "Sad"; break;
+                    case "Class 7": emotion = "Surprise"; break;
+                }
+    
+                if (probability > maxProbability) {
+                    maxProbability = probability;
+                    mostLikelyEmotion = emotion;
+                }
+    
+                const classPrediction = `${emotion}: ${probability.toFixed(2)}`;
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+    
+            sendToServer(mostLikelyEmotion);
+        }
+    
+        async function sendToServer(emotion) {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/${emotion}`);
+                const responseData = await response.text();
+                document.getElementById("server-output").innerHTML = responseData;
+            } catch (error) {
+                console.error('There was a problem sending the data to the server:', error);
+            }
+        }
+    </script>
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <div id="server-output">Server Response:</div>
+    
+    
+
+  </body>
+</html>
