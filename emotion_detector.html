@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <div>Teachable Machine Image Model</div>
+    <div>AI therapist</div>
     <button type="button" onclick="init()">Start</button>
     <div id="webcam-container"></div>
     <div id="label-container"></div>
@@ -17,6 +17,7 @@
         const URL = "https://teachablemachine.withgoogle.com/models/0pMyTmHUr/";
     
         let model, webcam, labelContainer, maxPredictions;
+        let lastSentTime = 0; // To keep track of when we last sent a request
     
         async function init() {
             const modelURL = URL + "model.json";
@@ -73,7 +74,14 @@
                 labelContainer.childNodes[i].innerHTML = classPrediction;
             }
     
-            sendToServer(mostLikelyEmotion);
+            // Get the current time
+            const currentTime = Date.now();
+    
+            // Check if 15 seconds have passed since the last request
+            if (currentTime - lastSentTime > 15000) {
+                sendToServer(mostLikelyEmotion);
+                lastSentTime = currentTime;
+            }
         }
     
         async function sendToServer(emotion) {
@@ -86,6 +94,7 @@
             }
         }
     </script>
+
     <div id="webcam-container"></div>
     <div id="label-container"></div>
     <div id="server-output">Server Response:</div>

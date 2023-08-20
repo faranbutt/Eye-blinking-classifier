@@ -2,6 +2,7 @@ import argparse
 import os
 
 import numpy as np
+np.bool = bool
 import pandas as pd
 
 from flask import Flask
@@ -12,6 +13,11 @@ from flask import jsonify, make_response, send_file
 
 cwd = os.getcwd()
 
+from transformers import pipeline, set_seed
+generator = pipeline('text-generation', model='gpt2')
+set_seed(42)
+
+
 
 class GetHelp(Resource):
 
@@ -20,37 +26,30 @@ class GetHelp(Resource):
             ):
 
         response = ""
-        # if emotion == 1:
+
+
+        # if emotion == "Angry":
         #     response = "Calm down"
-        # elif emotion == 2:
+        # elif emotion == "Disgust":
         #     response = "Don't worry"
-        # elif emotion == 3:
+        # elif emotion == "Fear":
         #     response = "You are okay"
-        # elif emotion == 4:
+        # elif emotion == "Happy":
         #     response = "You are fine"
-        # elif emotion == 5:
+        # elif emotion == "Neutral":
         #     response = "You are fine"
-        # elif emotion == 6:
+        # elif emotion == "Sad":
         #     response = "Do something fun"
-        # elif emotion == 7:
+        # elif emotion == "Surprise":
         #     response = "You are fine"
 
-        if emotion == "Angry":
-            response = "Calm down"
-        elif emotion == "Disgust":
-            response = "Don't worry"
-        elif emotion == "Fear":
-            response = "You are okay"
-        elif emotion == "Happy":
-            response = "You are fine"
-        elif emotion == "Neutral":
-            response = "You are fine"
-        elif emotion == "Sad":
-            response = "Do something fun"
-        elif emotion == "Surprise":
-            response = "You are fine"
+        prompt = f"This is a conversation between a friendly, professional therapist and a human user.\n\nHuman: I am feeling {emotion.lower()}.\n\nTherapist: Try to"
 
-        
+        response = generator(prompt, max_length=100, num_return_sequences=1)
+
+        response = response[0]['generated_text'].replace(prompt, "")
+
+        response = response.split("\n")[0]
 
         return jsonify({
             'result': response
