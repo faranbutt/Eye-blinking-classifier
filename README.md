@@ -42,7 +42,7 @@ https://flask-server-0987-5a52a4e45237.herokuapp.com/
 View the Demo [App](https://storage.googleapis.com/lablab-video-submissions/cll22l3qb000035748kv3v7h3/raw/submission-video-x-cll22l3qb000035748kv3v7h3-cllgmqdy2008b356vut6869wr_c4615z9.mp4)
 
 ## Screenshots
-![y1](https://github.com/faranbutt/Eye-blinking-classifier/blob/main/Blue%20Modern%20Medical%20Facebook%20fundraiser%20cover%20photo.png)
+![y1](https://github.com/timothelaborie/Eye-blinking-classifier/blob/main/Blue%20Modern%20Medical%20Facebook%20fundraiser%20cover%20photo.png)
 
 ## Technology Stack
 
