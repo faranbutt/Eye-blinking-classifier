@@ -87,7 +87,8 @@
 
         async function sendToServer(emotion) {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/${emotion}`);
+                // const response = await fetch(`http://127.0.0.1:8000/api/${emotion}`);
+                const response = await fetch(`https://1b50-84-75-48-252.ngrok.io/api/${emotion}`);
                 const responseData = await response.text();
                 var text = JSON.parse(responseData)["result"];
                 document.getElementById("server-output").innerHTML = "AI therapist response: Try to" + text;
