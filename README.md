@@ -1,5 +1,5 @@
 <!-- PROJECT TITLE -->
-  <h1 align="center">Mindful AI/h1>
+  <h1 align="center">Mindful AI</h1>
  <h2 2 align="center">
     Your AI therapist
     <br />
