@@ -39,25 +39,28 @@ https://eye-blinking-classifier.vercel.app/
 View the Demo [App](https://storage.googleapis.com/lablab-video-submissions/cll22l3qb000035748kv3v7h3/raw/submission-video-x-cll22l3qb000035748kv3v7h3-cllgmqdy2008b356vut6869wr_c4615z9.mp4)
 
 ## Screenshots
-![y1](https://github.com/faranbutt/Voice-Out/blob/main/voice%20out.png)
+![y1](https://github.com/faranbutt/Eye-blinking-classifier/blob/main/Blue%20Modern%20Medical%20Facebook%20fundraiser%20cover%20photo.png)
 
 ## Technology Stack
 
 | Technology       | Description                                   |
 | ---------------- | --------------------------------------------- |
-| Node JS           | Framework to build apps on server side|
-| Express JS        | Javascript backend framework|
-| OpenAI API        | Ability to perform AI functions on pretrained models|
+| Html,CSS,JS      | User for frontend                             |
+| Flask            | Backend framework                             |
+| SuperAGI         | Autonoumous AI Agent                          |
+| AWS Sagemaker    | Cloud ML platfrom                             |
+| Deployment       | Heroku,Vercel                                 |
 
 ## Features
 
-1. Ability to convert voice into text .
+1. Seamless Integration of Services .
 
-2. Autocorrects the generated text.
+2. AI-Driven Personalization.
 
-3. Access program through web and mobile plugins.
+3. Real-Time Interventions.
 
-4. Purely based on  MVC architecture
+4. Reduction of Eye and Mental health issues Reported
+from Users
 
 ## Structure
 
