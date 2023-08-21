@@ -12,7 +12,7 @@ We're revolutionizing healthcare with AI and ML in Mental Wellness and Eye Care.
 ## Table of Contents
 
 <details>
-<summary>Voice Out</summary>
+<summary>List</summary>
 
 - [Application Description](#application-description)
 - [Table of Contents](#table-of-contents)
@@ -22,7 +22,6 @@ We're revolutionizing healthcare with AI and ML in Mental Wellness and Eye Care.
 - [Technology Stack](#technology-stack)
 - [Features](#features)
 - [Structure](#structure)
-- [Interface](#interface)
 - [How to use the app](#how-to-use-the-app)
 - [Collaborators](#collaborators)
 - [Hackathon Link](#hackathon-link)
@@ -33,6 +32,10 @@ We're revolutionizing healthcare with AI and ML in Mental Wellness and Eye Care.
 
 ## Demo App URL:
 https://eye-blinking-classifier.vercel.app/
+
+## Server:
+https://flask-server-0987-5a52a4e45237.herokuapp.com/
+
 
 ## Video Demo
 
@@ -64,11 +67,7 @@ from Users
 
 ## Structure
 
-![y2](https://github.com/faranbutt/Voice-Out/blob/main/Struture.png)
-
-## Interface
-
-![y3](https://github.com/faranbutt/Voice-Out/blob/main/iPhone_14_-_1_200x433.jpeg)
+![y2](https://github.com/faranbutt/Eye-blinking-classifier/blob/main/1.jpg)
 
 
 ## How to use the app
@@ -76,27 +75,32 @@ from Users
 **Step #1** - Clone the project
 
 ```bash
-$ git clone https://github.com/faranbutt/Voice-Out
+$ git clone https://github.com/faranbutt/Eye-blinking-classifier
 ```
 
 **Step #2**
 
-- Install dependencies using: `npm i` OR `yarn`
+- Install dependencies using: `pip install -r server/requirements.txt`
 
-- To start the webapp, run: `npm run dev` OR `yarn run dev`
+- To start the webapp, run: `python server/server.py` or `python3 server/server.py`
+
+- Open the index.html file in your browser and start using
+
 
 
 ## Authors
 
 | Name            | Link                                   |
 | --------------- | -------------------------------------- |
+| Dhairya Shah | https://www.linkedin.com/in/dhairya-shah/ |
 | Faran Taimoor Butt | https://www.linkedin.com/in/faranbutt/ |
-| Wilon Wives | https://www.linkedin.com/in/wilonkoo/ |
-| Irfan Ahmed Saleem | https://www.linkedin.com/in/irfan-ahmed-saleem-91535b259/|
+| Homan | https://www.linkedin.com/in/homan-mirgolbabaee/ |
+| Abdullah Dilshad | https://www.linkedin.com/in/abdullah-dilshad/|
+| Timothé Laborie  | https://github.com/timothelaborie|
 
 ## Hackathon Link
 
-Hackathon [Submission](https://lablab.ai/event/ai-startup-hackathon-episode-2/voice-out/voice-out-ai-translation)
+Hackathon [Submission](https://lablab.ai/event/autonomous-agents-hackathon/ai-agents/mindfulai-ai-agents-for-mental-and-eye-health)
 
 ## License
 
